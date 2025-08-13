@@ -1,15 +1,22 @@
-provider "aws" {
-  region = var.region
-}
+terraform {
+  required_version = ">= 1.5.0"
 
-resource "aws_instance" "this" {
-  ami           = var.ami_id
-  instance_type = var.instance_type
-  tags = {
-    Name = var.instance_name
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 5.0"
+    }
+    archive = {
+      source  = "hashicorp/archive"
+      version = ">= 2.4.0"
+    }
+    local = {
+      source  = "hashicorp/local"
+      version = ">= 2.5.1"
+    }
   }
 }
 
-output "instance_id" {
-  value = aws_instance.this.id
+provider "aws" {
+  region = "us-east-1"
 }
