@@ -1,13 +1,15 @@
-terraform {
-  required_providers {
-    azurerm = {
-      source  = "hashicorp/azurerm"
-      version = "4.38.1"
-    }
+provider "aws" {
+  region = var.region
+}
+
+resource "aws_instance" "this" {
+  ami           = var.ami_id
+  instance_type = var.instance_type
+  tags = {
+    Name = var.instance_name
   }
 }
 
-provider "azurerm" {
-  features {}
-  subscription_id = "f54c5c8f-514a-460d-a529-4f1ede189050"
+output "instance_id" {
+  value = aws_instance.this.id
 }
